@@ -1,15 +1,20 @@
 package org.zerock.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.zerock.domain.SampleDTO;
 import org.zerock.domain.SampleDTOList;
+import org.zerock.domain.TodoDTO;
 
 import lombok.extern.log4j.Log4j;
 
@@ -67,6 +72,26 @@ public class SampleController {
         System.out.println("list dtos: "+ list);
         
         return "ex02Baen";    
+    }
+	
+	// 파라미터의 수집을 다른 용어로는 'binding(바인딩)'이 라고 함
+	// 변환이 가능한 데이터는 자동으로 변환되지만 경우에 따라서는 파라미터를 변환해서 처리해야 하는 경우도 존재함
+	// 예를 들어, 화면에서 '2018-01-01'과 같이 문자열로 전달된 데이터를 java.util.Date타입으로 변환하는 작업이 그러함
+	// 스프링 Controller에서는 파라미터를 바인딩할 때 자동으로 호출되는 @InitBinder를 이용해서 이러한 변환을 처리할 수 있음
+	
+	@InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-mm-dd");
+        binder.registerCustomEditor(java.util.Date.class, new CustomDateEditor(dateFormat, false));
+    } 
+ 
+	// http://localhost:8080/sample/ex03?title=test&dueDate=2018-01-01
+	
+    @GetMapping("/ex03")
+    public String ex03(TodoDTO todo) {
+        System.out.println("todo: "+todo);
+        
+        return "ex03";
     }
 
 	
