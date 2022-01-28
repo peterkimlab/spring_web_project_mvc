@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.zerock.domain.SampleDTO;
 import org.zerock.domain.SampleDTOList;
 import org.zerock.domain.TodoDTO;
@@ -105,6 +106,20 @@ public class SampleController {
         
         return "/sample/ex04";
     }
+    
+    // http://localhost:8080/sample/ex06
+    // Json 형태의 객체로 변환해서, 브라우저에 전달 
+    
+    @GetMapping("/ex06")
+    public @ResponseBody SampleDTO ex06() {
+        System.out.println("ex06...............");
+        SampleDTO dto =new SampleDTO();
+        dto.setAge(10);
+        dto.setName("김선영");
+        
+        return dto;
+    }
+
 
 
 	
