@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.zerock.domain.SampleDTO;
+import org.zerock.domain.SampleDTOList;
 
 import lombok.extern.log4j.Log4j;
 
@@ -56,5 +57,17 @@ public class SampleController {
 		
         return "ex02Array";    
     }
+	
+	// http://localhost:8080/sample/ex02Baen?list%5B0%5D.name=aaa&list%5B1%5D.name=bbb&list%5B2%5D.name=ccc
+	// 객체 리스트도 전송 가능.
+	// Tomcat이[]를허용하지 않음. [ 은 %5B, ] 은 %5D
+	
+	@GetMapping("/ex02Baen")
+    public String ex02Baen(SampleDTOList list) {
+        System.out.println("list dtos: "+ list);
+        
+        return "ex02Baen";    
+    }
+
 	
 }
